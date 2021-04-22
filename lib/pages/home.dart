@@ -19,7 +19,10 @@ class Home extends StatelessWidget {
           builder: (context, snapshot) {
             final provider = Provider.of<GoogleSignInProvider>(context);
 
+            print('kujhsand ${provider.isFacebookSignIn}');
+
             if (provider.isSigningIn || provider.isFacebookSignIn) {
+              print('Hello');
               return buildLoading();
             } else if (snapshot.hasData) {
               print(snapshot);

@@ -66,21 +66,10 @@ class GoogleSignInProvider extends ChangeNotifier {
   Future facebookLogin() async {
     isFacebookSignIn = true;
 
-    var bool = isFacebookSignIn;
-
     final result = await FacebookAuth.instance
         .login(permissions: ['email', 'public_profile']);
 
     switch (result.status) {
-      case LoginStatus.cancelled:
-        bool = false;
-        print('Cancelled By user');
-        break;
-      case LoginStatus.failed:
-        bool = false;
-        print('Error');
-        break;
-
       case LoginStatus.success:
         print('There you got here');
 
@@ -92,14 +81,24 @@ class GoogleSignInProvider extends ChangeNotifier {
 
         await FirebaseAuth.instance.signInWithCredential(credential);
 
-        bool = false;
+        print('kjuweashdnfl ${isFacebookSignIn}');
+
+        isFacebookSignIn = false;
 
         break;
 
-      default:
-    }
+      case LoginStatus.cancelled:
+        isFacebookSignIn = false;
+        print('Cancelled By user');
+        break;
+      case LoginStatus.failed:
+        isFacebookSignIn = false;
+        print('Error');
+        break;
 
-    isFacebookSignIn = bool;
+      default:
+        break;
+    }
   }
 
   void facebookLogout() async {

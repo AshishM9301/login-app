@@ -42,7 +42,7 @@ class LoggedInWidget extends StatelessWidget {
             height: 8,
           ),
           Text(
-            'Email: ' + user.email,
+            'Email: ' + user.providerData.single?.email,
             style: TextStyle(color: Colors.white),
           ),
           SizedBox(
