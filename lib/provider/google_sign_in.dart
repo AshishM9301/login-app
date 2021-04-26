@@ -11,6 +11,7 @@ class GoogleSignInProvider extends ChangeNotifier {
   FirebaseAuth _auth = FirebaseAuth.instance;
   bool _isSigningIn;
   bool _isFacebookSignIn;
+  String facebookToken;
 
   GoogleSignInProvider() {
     _isSigningIn = false;
@@ -73,11 +74,12 @@ class GoogleSignInProvider extends ChangeNotifier {
       case LoginStatus.success:
         print('There you got here');
 
+        facebookToken = result.accessToken.token;
+
         final AuthCredential credential =
             FacebookAuthProvider.credential(result.accessToken.token);
         // Once signed in, return the UserCredential
-
-        print(credential);
+        //
 
         await FirebaseAuth.instance.signInWithCredential(credential);
 
@@ -99,6 +101,10 @@ class GoogleSignInProvider extends ChangeNotifier {
       default:
         break;
     }
+  }
+
+  getFacebookToken() async {
+    return facebookToken;
   }
 
   void facebookLogout() async {
